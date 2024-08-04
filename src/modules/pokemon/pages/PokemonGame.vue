@@ -4,8 +4,8 @@
     <h3 class="animate-pulse">Cargando Pokemons</h3>
   </section>
 
-  <section v-else class="flex flex-col justify-center items-center h-screen w-screen">
-    <h1 class="m-5">Who's this Pokemon?</h1>
+  <section v-else class="flex flex-col justify-center items-center min-h-screen w-screen">
+    <h1 class="m-5 text-2xl">Who's this Pokemon?</h1>
     <div class="h-20">
       <button
         class="bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600 transition-all"
@@ -22,6 +22,17 @@
       @select-pokemon="checkAnswer"
       :correct-answer="randomPokemon.id"
     />
+    <div class="flex gap-5 mt-10">
+      <h2 class="text-xl">Victories
+        <h3 class="ml-2 text-center">{{ victories }}</h3>
+      </h2>
+      <h2 class="text-xl">Defeats
+        <h3 class="ml-2 text-center">{{ defeats }}</h3>
+      </h2>
+    </div>
+    <button @click="resetScore" class="bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600 transition-all mt-5">
+      Reset Score
+    </button>
   </section>
 </template>
 
@@ -31,5 +42,5 @@
   import { usePokemonGame } from '@/modules/pokemon/composables/usePokemonGame'
   import { GameStatus } from '@/modules/pokemon/interfaces'
 
-  const { gameStatus, isLoading, randomPokemon, pokemonOptions, getNextOptions, checkAnswer } = usePokemonGame();
+  const { gameStatus, isLoading, randomPokemon, pokemonOptions, victories, defeats, getNextOptions, resetScore, checkAnswer } = usePokemonGame();
 </script>

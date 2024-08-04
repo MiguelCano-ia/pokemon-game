@@ -35,7 +35,7 @@
 
 <style scoped>
   button {
-   @apply bg-white shadow-md rounded-lg p-3 m-2 cursor-pointer w-40 text-center transition-all hover:bg-gray-100;
+   @apply bg-white shadow-md rounded-lg p-3 m-2 cursor-pointer w-40 text-center transition-all hover:bg-gray-200;
   }
 
   .correct {

@@ -11,6 +11,9 @@ export const usePokemonGame = () => {
 
   const isLoading = computed(() => pokemons.value.length === 0); // Indica si se están cargando los pokemons
 
+  const victories = ref(0); // Número de victorias
+  const defeats = ref(0); // Número
+
   // Obtiene un pokemon aleatorio de las opciones
   const randomPokemon = computed(() => {
     const randomIndex = Math.floor(Math.random() * pokemonOptions.value.length);
@@ -32,11 +35,21 @@ export const usePokemonGame = () => {
     return pokemonsArray.sort(() => Math.random() - 0.5); // Aleatoriza el orden de los pokemons
   };
 
-  const getNextOptions = ( howMany: number = 4) => { // Obtiene las siguientes opciones de pokemons
+  const getNextOptions = async ( howMany: number = 4): Promise<Pokemon[] | void> => { // Obtiene las siguientes opciones de pokemons
     gameStatus.value = GameStatus.Playing;
+
+    if (pokemons.value.length < howMany) {
+      pokemons.value = await getPokemons();
+    }
+
     pokemonOptions.value = pokemons.value.slice(0, howMany); // Obtiene los primeros 'howMany' pokemons
     pokemons.value = pokemons.value.slice(howMany); // Elimina los primeros 'howMany' pokemons
   };
+
+  const resetScore = () => {
+    victories.value = 0;
+    defeats.value = 0;
+  }
 
   const checkAnswer = (id: string) => {
     const hasWon = randomPokemon.value.id === id;
@@ -48,15 +61,17 @@ export const usePokemonGame = () => {
         spread: 150,
         origin: { y: 0.6 }
       });
+      victories.value++;
       return;
     }
+    defeats.value++;
     gameStatus.value = GameStatus.Lost;
   }
 
   onMounted(async () => {
     await new Promise((r) => setTimeout(r, 500)); // Probar el isLoading
     pokemons.value = await getPokemons(); // Carga los pokemons
-    getNextOptions(); // Carga las opciones de pokemons
+    await getNextOptions(); // Carga las opciones de pokemons
   });
 
   return {
@@ -64,9 +79,12 @@ export const usePokemonGame = () => {
     isLoading,
     pokemonOptions,
     randomPokemon,
+    victories,
+    defeats,
 
     // Methods
     getNextOptions,
     checkAnswer,
+    resetScore,
   }
 };
