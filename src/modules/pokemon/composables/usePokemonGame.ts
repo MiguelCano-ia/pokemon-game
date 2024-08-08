@@ -52,6 +52,9 @@ export const usePokemonGame = () => {
   }
 
   const checkAnswer = (id: string) => {
+    if (!randomPokemon.value) {
+      throw new Error('randomPokemon is undefined');
+    }
     const hasWon = randomPokemon.value.id === id;
 
     if (hasWon) {
@@ -69,9 +72,13 @@ export const usePokemonGame = () => {
   }
 
   onMounted(async () => {
+    console.log('onMounted process');
     await new Promise((r) => setTimeout(r, 500)); // Probar el isLoading
     pokemons.value = await getPokemons(); // Carga los pokemons
     await getNextOptions(); // Carga las opciones de pokemons
+
+    console.log(pokemonOptions.value);
+    console.log('finished mounted process');
   });
 
   return {

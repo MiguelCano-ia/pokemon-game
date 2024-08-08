@@ -22,7 +22,7 @@
   interface Props {
     pokemonOptions: Pokemon[]; // Se define el prop pokemonOptions que es un array de objetos de tipo Pokemon
     blockSelection: boolean; // Se define el prop blockSelection que es un booleano
-    correctAnswer: string; // Se define el prop correctAnswer que es un strin
+    correctAnswer: string; // Se define el prop correctAnswer que es un string
   }
 
   defineProps<Props>();

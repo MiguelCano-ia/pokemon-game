@@ -1,7 +1,7 @@
 <template>
   <section v-if="isLoading" class="flex flex-col justify-center items-center w-screen h-screen">
-    <h1 class="text-3xl">Espere por favor</h1>
-    <h3 class="animate-pulse">Cargando Pokemons</h3>
+    <h1 class="text-3xl">Wait please</h1>
+    <h3 class="animate-pulse">Loading Pokemons</h3>
   </section>
 
   <section v-else class="flex flex-col justify-center items-center min-h-screen w-screen">
@@ -9,6 +9,7 @@
     <div class="h-20">
       <button
         class="bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600 transition-all"
+        data-test-id="btn-new-game"
         v-if="gameStatus !== GameStatus.Playing"
         @click="getNextOptions(4)"
       >
